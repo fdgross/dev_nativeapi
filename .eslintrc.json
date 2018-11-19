@@ -1,0 +1,25 @@
+{
+    "extends": "airbnb",
+    "rules":{
+        "semi":2,
+        "import/no-extraneous-dependencies": [
+            "error", {
+                "devDependencies": true
+            }
+        ],
+        "prefer-destructuring": ["error", {"object": false, "array": false}],
+        "linebreak-style": 0,
+        "no-param-reassign": 0
+    },
+    "globals":{
+        "describe":true,
+        "it":true,
+        "expect":true,
+        "app":true,
+        "request": true,
+        "beforeEach": true,
+        "td": true,
+        "Joi": true,
+        "joiAssert": true
+    }
+}
