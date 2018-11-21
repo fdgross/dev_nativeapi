@@ -12,18 +12,38 @@ const errorResponse = (message, statusCode = HttpStatus.BAD_REQUEST) => defaultR
 const filePersist = require('./filePersist');
 
 class CallbacksController {
-  constructor(Callbacks) {
+  constructor(Callbacks, Profiles) {
     this.Callbacks = Callbacks;
+    this.Profiles = Profiles;
   }
 
   getAll() {
-    return this.Callbacks.findAll({})
+    return this.Callbacks.findAll({
+      include: [
+        {
+          model: this.Profiles,
+          as: 'Profile',
+          attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+          },
+        },
+      ],
+    })
       .then(result => defaultResponse(result))
       .catch(error => errorResponse(error.message));
   }
 
   getById(params) {
     return this.Callbacks.findOne({
+      include: [
+        {
+          model: this.Profiles,
+          as: 'Profile',
+          attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+          },
+        },
+      ],
       where: params,
     })
       .then(result => defaultResponse(result))

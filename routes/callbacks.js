@@ -1,7 +1,10 @@
 import CallbacksController from '../controllers/callbacks';
 
 export default(app) => {
-  const callbacksController = new CallbacksController(app.datasource.models.Callbacks);
+  const callbacksController = new CallbacksController(
+    app.datasource.models.Callbacks,
+    app.datasource.models.Profiles,
+  );
   app.route('/callbacks')
     // .all(app.auth.authenticate())
     .get((req, res) => {
