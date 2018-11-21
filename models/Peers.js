@@ -80,11 +80,6 @@ export default (sequelize, DataType) => {
           as: 'Groups',
           onDelete: 'CASCADE',
         });
-        Peers.belongsToMany(models.OutRoutes, {
-          through: 'OutRoutesOverflowPeers',
-          as: 'Peers',
-          onDelete: 'CASCADE',
-        });
         Peers.belongsToMany(models.Queues, {
           through: 'PeersQueues',
           as: 'Queues',

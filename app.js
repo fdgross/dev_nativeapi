@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import config from './config/config';
 import datasource from './config/datasource';
 // ROUTERS
+import callbacksRouter from './routes/callbacks';
 import categoriesRouter from './routes/categories';
 import contactsRouter from './routes/contacts';
 import costCentersRouter from './routes/costCenters';
@@ -47,6 +48,7 @@ app.use(auth.initialize());
 app.auth = auth;
 
 authRouter(app);
+callbacksRouter(app);
 categoriesRouter(app);
 contactsRouter(app);
 costCentersRouter(app);

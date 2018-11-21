@@ -84,15 +84,6 @@ export default (sequelize, DataType) => {
       type: DataType.INTEGER,
       allowNull: true,
     },
-  }, {
-    classMethods: {
-      associate: (models) => {
-        Categories.belongsToMany(models.OutRoutes, {
-          through: 'OutRoutesOverflowCategories',
-          as: 'Categories',
-        });
-      },
-    },
   });
 
   return Categories;

@@ -12,9 +12,10 @@ const errorResponse = (message, statusCode = HttpStatus.BAD_REQUEST) => defaultR
 const filePersist = require('./filePersist');
 
 class OutRoutesController {
-  constructor(OutRoutes, OutRoutesDetails) {
+  constructor(OutRoutes, OutRoutesDetails, OutRoutesOverflows) {
     this.OutRoutes = OutRoutes;
     this.OutRoutesDetails = OutRoutesDetails;
+    this.OutRoutesOverflows = OutRoutesOverflows;
   }
 
   getAll() {
@@ -26,6 +27,15 @@ class OutRoutesController {
           attributes: {
             exclude: ['createdAt', 'updatedAt'],
           },
+          include: [
+            {
+              model: this.OutRoutesOverflows,
+              as: 'OutRouteOverflows',
+              attributes: {
+                exclude: ['createdAt', 'updatedAt'],
+              },
+            },
+          ],
         },
       ],
     })
@@ -43,6 +53,15 @@ class OutRoutesController {
           attributes: {
             exclude: ['createdAt', 'updatedAt'],
           },
+          include: [
+            {
+              model: this.OutRoutesOverflows,
+              as: 'OutRouteOverflows',
+              attributes: {
+                exclude: ['createdAt', 'updatedAt'],
+              },
+            },
+          ],
         },
       ],
     })
@@ -60,7 +79,17 @@ class OutRoutesController {
         outRoutesDetails.forEach((detail) => {
           c += 1;
           this.OutRoutesDetails.create(detail)
-            .then(newDetail => newOutRoute.addOutRouteDetails(newDetail.id))
+            .then((newDetail) => {
+              const outRouteOverflows = detail.overflows;
+              delete detail.overflows;
+              outRouteOverflows.forEach((overflow) => {
+                this.OutRoutesOverflows.create(overflow)
+                  .then((newOverflow) => {
+                    newDetail.addOutRouteOverflows(newOverflow.id);
+                  });
+              });
+              newOutRoute.addOutRouteDetails(newDetail.id);
+            })
             .then(() => {
               if (c === outRoutesDetails.length) {
                 filePersist.writeOutRoutesToFile();
@@ -90,8 +119,20 @@ class OutRoutesController {
           .then((updatedOutRoute) => {
             outRoutesDetails.forEach((detail) => {
               this.OutRoutesDetails.create(detail)
-                .then(newDetail => updatedOutRoute.addOutRouteDetails(newDetail.id)
-                  .then(() => filePersist.writeOutRoutesToFile()));
+                .then((newDetail) => {
+                  console.log(detail);
+                  const outRouteOverflows = detail.overflows;
+                  console.log(outRouteOverflows);
+                  delete detail.overflows;
+                  outRouteOverflows.forEach((overflow) => {
+                    this.OutRoutesOverflows.create(overflow)
+                      .then((newOverflow) => {
+                        newDetail.addOutRouteOverflows(newOverflow.id);
+                      });
+                  });
+                  updatedOutRoute.addOutRouteDetails(newDetail.id);
+                });
+              // .then(() => filePersist.writeOutRoutesToFile());
             });
           });
         return updatedOutRouteCount;

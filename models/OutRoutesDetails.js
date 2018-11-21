@@ -27,39 +27,15 @@ export default (sequelize, DataType) => {
       type: DataType.STRING,
       allowNull: true,
     },
-    csp: {
-      type: DataType.INTEGER,
-      allowNull: true,
-    },
     externalCode: {
       type: DataType.BOOLEAN,
       allowNull: false,
       defaultValue: true,
     },
-    overflow: {
+    enabled: {
       type: DataType.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
-    },
-    overflowOnBusy: {
-      type: DataType.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    overflowOnCongestion: {
-      type: DataType.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    overflowOnChanUnavail: {
-      type: DataType.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    overflowOnCount: {
-      type: DataType.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
+      defaultValue: true,
     },
   }, {
     classMethods: {
@@ -68,6 +44,11 @@ export default (sequelize, DataType) => {
           foreignKey: 'trunkId',
           as: 'Trunk',
           onDelete: 'RESTRICT',
+        });
+        OutRoutesDetails.hasMany(models.OutRoutesOverflows, {
+          foreignKey: 'outRouteOverflowId',
+          as: 'OutRouteOverflows',
+          onDelete: 'CASCADE',
         });
       },
     },
