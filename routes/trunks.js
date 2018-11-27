@@ -3,7 +3,7 @@ import TrunksController from '../controllers/trunks';
 export default(app) => {
   const trunksController = new TrunksController(app.datasource.models.Trunks);
   app.route('/trunks')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       trunksController.getAll()
         .then((response) => {

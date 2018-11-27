@@ -57,6 +57,12 @@ export default (sequelize, DataType) => {
           });
         },
       },
+      hooks: {
+        beforeCreate: (user) => {
+          const salt = bcrypt.genSaltSync();
+          user.set('password', bcrypt.hashSync(user.password, salt));
+        },
+      },
     },
   );
 

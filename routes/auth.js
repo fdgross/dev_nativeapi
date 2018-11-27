@@ -6,11 +6,11 @@ export default (app) => {
   const Users = app.datasource.models.Users;
 
   app.post('/token', (req, res) => {
-    if (req.body.email && req.body.password) {
-      const email = req.body.email;
+    if (req.body.username && req.body.password) {
+      const username = req.body.username;
       const password = req.body.password;
 
-      Users.findOne({ where: { email } })
+      Users.findOne({ where: { username } })
         .then((user) => {
           if (Users.isPassword(user.password, password)) {
             const payload = { id: user.id };

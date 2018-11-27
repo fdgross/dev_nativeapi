@@ -28,21 +28,21 @@ import authRouter from './routes/auth';
 import authorization from './auth';
 
 const app = express();
+// ENABLE CORS
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+// END ENABLE CORS
+
 app.config = config;
 app.datasource = datasource(app);
 
 app.set('port', 7000);
 app.use(bodyParser.json());
 const auth = authorization(app);
-
-// ENABLE CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
-// END ENABLE CORS
 
 app.use(auth.initialize());
 app.auth = auth;
