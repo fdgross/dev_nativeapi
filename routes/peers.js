@@ -8,7 +8,7 @@ export default(app) => {
     app.datasource.models.Groups,
   );
   app.route('/peers')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       peersController.getAll()
         .then((response) => {
@@ -26,7 +26,7 @@ export default(app) => {
     });
 
   app.route('/peers/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       peersController.getById(req.params.id)
         .then((response) => {

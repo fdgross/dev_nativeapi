@@ -7,7 +7,7 @@ export default(app) => {
     app.datasource.models.Ivrs,
   );
   app.route('/events')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       featuresController.getAll()
         .then((response) => {
@@ -24,7 +24,7 @@ export default(app) => {
     });
 
   app.route('/events/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       featuresController.getById(req.params)
         .then((response) => {

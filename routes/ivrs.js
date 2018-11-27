@@ -6,7 +6,7 @@ export default(app) => {
     app.datasource.models.IvrsDetails,
   );
   app.route('/ivrs')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       ivrsController.getAll()
         .then((response) => {
@@ -23,7 +23,7 @@ export default(app) => {
     });
 
   app.route('/ivrs/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       ivrsController.getById(req.params)
         .then((response) => {

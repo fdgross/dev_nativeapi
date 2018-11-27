@@ -3,7 +3,7 @@ import CostCentersController from '../controllers/costCenters';
 export default(app) => {
   const costCentersController = new CostCentersController(app.datasource.models.CostCenters);
   app.route('/costCenters')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       costCentersController.getAll()
         .then((response) => {
@@ -20,7 +20,7 @@ export default(app) => {
     });
 
   app.route('/costCenters/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       costCentersController.getById(req.params)
         .then((response) => {

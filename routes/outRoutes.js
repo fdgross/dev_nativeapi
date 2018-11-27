@@ -8,7 +8,7 @@ export default(app) => {
   );
 
   app.route('/outRoutes')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       outRoutesController.getAll()
         .then((response) => {
@@ -25,7 +25,7 @@ export default(app) => {
     });
 
   app.route('/outRoutes/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       outRoutesController.getById(req.params)
         .then((response) => {

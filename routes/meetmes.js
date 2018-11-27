@@ -3,7 +3,7 @@ import FeaturesController from '../controllers/meetmes';
 export default(app) => {
   const meetmesController = new FeaturesController(app.datasource.models.Meetmes);
   app.route('/meetmes')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       meetmesController.getAll()
         .then((response) => {
@@ -20,7 +20,7 @@ export default(app) => {
     });
 
   app.route('/meetmes/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       meetmesController.getById(req.params)
         .then((response) => {

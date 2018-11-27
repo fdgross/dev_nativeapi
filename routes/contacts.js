@@ -3,7 +3,7 @@ import ContactsController from '../controllers/contacts';
 export default(app) => {
   const contactsController = new ContactsController(app.datasource.models.Contacts);
   app.route('/contacts')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       contactsController.getAll()
         .then((response) => {
@@ -20,7 +20,7 @@ export default(app) => {
     });
 
   app.route('/contacts/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       contactsController.getById(req.params)
         .then((response) => {

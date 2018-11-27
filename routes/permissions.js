@@ -3,7 +3,7 @@ import PermissionsController from '../controllers/permissions';
 export default(app) => {
   const permissionsController = new PermissionsController(app.datasource.models.Permissions);
   app.route('/permissions')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       permissionsController.getAll()
         .then((response) => {
@@ -13,7 +13,7 @@ export default(app) => {
     });
 
   app.route('/permissions/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       permissionsController.getById(req.params)
         .then((response) => {

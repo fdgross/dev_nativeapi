@@ -8,7 +8,7 @@ export default(app) => {
     app.datasource.models.Ivrs,
   );
   app.route('/serviceHours')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       serviceHoursController.getAll()
         .then((response) => {
@@ -25,7 +25,7 @@ export default(app) => {
     });
 
   app.route('/serviceHours/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       serviceHoursController.getById(req.params)
         .then((response) => {

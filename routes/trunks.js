@@ -20,7 +20,7 @@ export default(app) => {
     });
 
   app.route('/trunks/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       trunksController.getById(req.params)
         .then((response) => {

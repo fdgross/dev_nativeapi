@@ -3,7 +3,7 @@ import MohsController from '../controllers/mohs';
 export default(app) => {
   const mohsController = new MohsController(app.datasource.models.Mohs);
   app.route('/mohs')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       mohsController.getAll()
         .then((response) => {
@@ -20,7 +20,7 @@ export default(app) => {
     });
 
   app.route('/mohs/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       mohsController.getById(req.params)
         .then((response) => {

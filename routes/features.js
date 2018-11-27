@@ -3,7 +3,7 @@ import FeaturesController from '../controllers/features';
 export default(app) => {
   const featuresController = new FeaturesController(app.datasource.models.Features);
   app.route('/features')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       featuresController.getAll()
         .then((response) => {
@@ -20,7 +20,7 @@ export default(app) => {
     });
 
   app.route('/features/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       featuresController.getById(req.params)
         .then((response) => {

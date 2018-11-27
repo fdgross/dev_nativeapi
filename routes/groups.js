@@ -3,7 +3,7 @@ import GroupsController from '../controllers/groups';
 export default(app) => {
   const groupsController = new GroupsController(app.datasource.models.Groups);
   app.route('/groups')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       groupsController.getAll()
         .then((response) => {
@@ -20,7 +20,7 @@ export default(app) => {
     });
 
   app.route('/groups/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       groupsController.getById(req.params)
         .then((response) => {

@@ -8,7 +8,7 @@ export default(app) => {
     app.datasource.models.Ivrs,
   );
   app.route('/queues')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       queuesController.getAll()
         .then((response) => {
@@ -25,7 +25,7 @@ export default(app) => {
     });
 
   app.route('/queues/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       queuesController.getById(req.params)
         .then((response) => {

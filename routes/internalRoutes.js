@@ -6,7 +6,7 @@ export default(app) => {
     app.datasource.models.InternalRoutesDetails,
   );
   app.route('/internalRoutes')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       inRoutesController.getAll()
         .then((response) => {
@@ -23,7 +23,7 @@ export default(app) => {
     });
 
   app.route('/internalRoutes/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       inRoutesController.getById(req.params)
         .then((response) => {

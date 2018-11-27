@@ -6,7 +6,7 @@ export default(app) => {
     app.datasource.models.Profiles,
   );
   app.route('/callbacks')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       callbacksController.getAll()
         .then((response) => {
@@ -23,7 +23,7 @@ export default(app) => {
     });
 
   app.route('/callbacks/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       callbacksController.getById(req.params)
         .then((response) => {

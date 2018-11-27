@@ -6,7 +6,7 @@ export default(app) => {
     app.datasource.models.OutRoutes,
   );
   app.route('/profiles')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       profilesController.getAll()
         .then((response) => {
@@ -23,7 +23,7 @@ export default(app) => {
     });
 
   app.route('/profiles/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       profilesController.getById(req.params)
         .then((response) => {
