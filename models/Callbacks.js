@@ -16,6 +16,14 @@ export default (sequelize, DataType) => {
       type: DataType.STRING,
       allowNull: true,
     },
+    destinationType: {
+      type: DataType.STRING,
+      allowNull: false,
+    },
+    destination: {
+      type: DataType.STRING,
+      allowNull: false,
+    },
   }, {
     classMethods: {
       associate: (models) => {

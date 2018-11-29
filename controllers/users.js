@@ -89,6 +89,7 @@ class UsersController {
     delete data.costCenters;
     return this.Users.update(data, {
       where: params,
+      individualHooks: true,
     })
       .then((result) => {
         if (result[0] === 0) {
