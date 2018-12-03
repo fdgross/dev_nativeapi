@@ -24,6 +24,7 @@ import profilesRouter from './routes/profiles';
 import queuesRouter from './routes/queues';
 import serviceHoursRouter from './routes/serviceHours';
 import trunksRouter from './routes/trunks';
+import uploadsRouter from './routes/uploads';
 import usersRouter from './routes/users';
 // END ROUTERS
 import authRouter from './routes/auth';
@@ -71,6 +72,7 @@ profilesRouter(app);
 queuesRouter(app);
 serviceHoursRouter(app);
 trunksRouter(app);
+uploadsRouter(app);
 usersRouter(app);
 
 export default app;

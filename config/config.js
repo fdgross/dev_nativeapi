@@ -27,4 +27,8 @@ export default {
   outRoutes: 'C:/Temp/extensions_out.conf',
   queues: 'C:/Temp/queues_native.conf',
   dialQueues: 'C:/Temp/extensions_filas.conf',
+
+  // ----------------NATIVE UPLOAD DIR-----------------
+  defaultUploadDir: 'C:/Temp/uploads_tmp',
+  defaultBaseUploadDir: 'C:/Temp',
 };
