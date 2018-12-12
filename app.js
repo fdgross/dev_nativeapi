@@ -42,6 +42,9 @@ app.use((req, res, next) => {
 });
 // END ENABLE CORS
 
+app.use(bodyParser.json({ limit: '20mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
+
 app.config = config;
 app.datasource = datasource(app);
 

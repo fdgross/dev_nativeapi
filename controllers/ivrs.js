@@ -1,4 +1,7 @@
 import HttpStatus from 'http-status';
+import fs from 'fs';
+import rimraf from 'rimraf';
+import app from '../app';
 
 const defaultResponse = (data, statusCode = HttpStatus.OK) => ({
   data,
@@ -8,6 +11,15 @@ const defaultResponse = (data, statusCode = HttpStatus.OK) => ({
 const errorResponse = (message, statusCode = HttpStatus.BAD_REQUEST) => defaultResponse({
   error: message,
 }, statusCode);
+
+function syncFiles(ivrId, file) {
+  const newFolder = `${app.config.defaultIvrUploadDir}/${ivrId}`;
+  if (fs.existsSync(`${app.config.defaultUploadTempDir}/${file}`)) {
+    fs.rename(`${app.config.defaultUploadTempDir}/${file}`, `${newFolder}/${file}`, (err) => {
+      if (err) throw err;
+    });
+  }
+}
 
 class IvrsController {
   constructor(Ivrs, IvrsDetails) {
@@ -54,7 +66,13 @@ class IvrsController {
 
     return this.Ivrs.create(data)
       .then((newIvr) => {
+        const newFolder = `${app.config.defaultIvrUploadDir}/${newIvr.id}`;
+        fs.mkdirSync(newFolder);
         ivrDetails.forEach((detail) => {
+          if ((detail.command === 'playback') || (detail.command === 'read')) {
+            const objParameters = JSON.parse(detail.parameters);
+            syncFiles(newIvr.id, objParameters.file);
+          }
           this.IvrsDetails.create(detail)
             .then(newDetail => newIvr.addIvrDetails(newDetail.id));
         });
@@ -79,6 +97,10 @@ class IvrsController {
         })
           .then((updatedIvr) => {
             ivrDetails.forEach((detail) => {
+              if ((detail.command === 'playback') || (detail.command === 'read')) {
+                const objParameters = JSON.parse(detail.parameters);
+                syncFiles(updatedIvr.id, objParameters.file);
+              }
               this.IvrsDetails.create(detail)
                 .then(newDetail => updatedIvr.addIvrDetails(newDetail.id));
             });
@@ -93,7 +115,13 @@ class IvrsController {
     return this.Ivrs.destroy({
       where: params,
     })
-      .then(result => defaultResponse(result, HttpStatus.NO_CONTENT))
+      .then((result) => {
+        rimraf(
+          `${app.config.defaultIvrUploadDir}/${params.id}`,
+          () => { console.log(`Directory ${app.config.defaultIvrUploadDir}/${params.id} removed`); },
+        );
+        return defaultResponse(result, HttpStatus.NO_CONTENT);
+      })
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 }

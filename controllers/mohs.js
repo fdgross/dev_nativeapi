@@ -1,4 +1,7 @@
 import HttpStatus from 'http-status';
+import fs from 'fs';
+import rimraf from 'rimraf';
+import app from '../app';
 
 const defaultResponse = (data, statusCode = HttpStatus.OK) => ({
   data,
@@ -9,7 +12,21 @@ const errorResponse = (message, statusCode = HttpStatus.BAD_REQUEST) => defaultR
   error: message,
 }, statusCode);
 
-const filePersist = require('./filePersist');
+function syncFiles(moh) {
+  const newFolder = `${app.config.defaultMohUploadDir}/${moh.id}`;
+  if (moh.files) {
+    const arrFiles = moh.files.split(',');
+    arrFiles.forEach((file) => {
+      if (fs.existsSync(`${app.config.defaultUploadTempDir}/${file}`)) {
+        fs.rename(`${app.config.defaultUploadTempDir}/${file}`, `${newFolder}/${file}`, (err) => {
+          if (err) throw err;
+        });
+      }
+    });
+  }
+}
+
+// const filePersist = require('./filePersist');
 
 class MohsController {
   constructor(Mohs) {
@@ -32,6 +49,11 @@ class MohsController {
 
   create(data) {
     return this.Mohs.create(data)
+      .then((newMoh) => {
+        const newFolder = `${app.config.defaultMohUploadDir}/${newMoh.id}`;
+        fs.mkdirSync(newFolder);
+        syncFiles(newMoh);
+      })
       .then(result => defaultResponse(result, HttpStatus.CREATED))
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
@@ -40,11 +62,18 @@ class MohsController {
     return this.Mohs.update(data, {
       where: params,
     })
-      .then((updatedMoh) => {
-        filePersist.writePeersToFile();
-        return updatedMoh;
+      .then((result) => {
+        if (result[0] === 0) {
+          return errorResponse(`Moh id ${params.id} not found`, HttpStatus.NOT_FOUND);
+        }
+        this.Mohs.findOne({
+          where: params,
+        })
+          .then((updatedMoh) => {
+            syncFiles(updatedMoh);
+          });
+        return defaultResponse(result);
       })
-      .then(result => defaultResponse(result))
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
@@ -52,7 +81,13 @@ class MohsController {
     return this.Mohs.destroy({
       where: params,
     })
-      .then(result => defaultResponse(result, HttpStatus.NO_CONTENT))
+      .then((result) => {
+        rimraf(
+          `${app.config.defaultMohUploadDir}/${params.id}`,
+          () => { console.log(`Directory ${app.config.defaultMohUploadDir}/${params.id} removed`); },
+        );
+        return defaultResponse(result, HttpStatus.NO_CONTENT);
+      })
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 }

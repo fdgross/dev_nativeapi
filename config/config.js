@@ -29,6 +29,8 @@ export default {
   dialQueues: 'C:/Temp/extensions_filas.conf',
 
   // ----------------NATIVE UPLOAD DIR-----------------
-  defaultUploadDir: 'C:/Temp/uploads_tmp',
   defaultBaseUploadDir: 'C:/Temp',
+  defaultUploadTempDir: 'C:/Temp/uploads_tmp',
+  defaultMohUploadDir: 'C:/Temp/mohs',
+  defaultIvrUploadDir: 'C:/Temp/ivrs',
 };

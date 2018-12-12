@@ -16,6 +16,10 @@ export default (sequelize, DataType) => {
       type: DataType.TEXT,
       allowNull: true,
     },
+    files: {
+      type: DataType.TEXT,
+      allowNull: true,
+    },
   });
 
   return Mohs;
