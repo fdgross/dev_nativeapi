@@ -31,7 +31,8 @@
     "rimraf": "^2.6.2",
     "sequelize": "^4.37.3",
     "sequelize-cli": "^4.0.0",
-    "sqlite3": "^4.0.0"
+    "sqlite3": "^4.0.0",
+    "systeminformation": "^3.51.4"
   },
   "devDependencies": {
     "@types/cors": "^2.8.4",

@@ -4,7 +4,7 @@ export default {
   password: 'voipadmin',
   params: {
     dialect: 'mysql',
-    host: '172.16.0.60',
+    host: '172.16.0.56',
     port: '3306',
     define: {
       underscore: true,
@@ -15,7 +15,7 @@ export default {
   jwtSession: { session: false },
 
   // ----------------NATIVE CONFIGURATIONS----------------
-  amiHost: '172.16.0.60',
+  amiHost: '172.16.0.56',
   amiPort: '5038',
   amiUser: 'admin',
   amiPassword: 'admin',

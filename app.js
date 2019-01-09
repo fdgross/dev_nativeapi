@@ -5,6 +5,8 @@ import config from './config/config';
 import datasource from './config/datasource';
 
 // ROUTERS
+import apisRouter from './routes/apis';
+import apisCallsRouter from './routes/apisCalls';
 import callbacksRouter from './routes/callbacks';
 import categoriesRouter from './routes/categories';
 import contactsRouter from './routes/contacts';
@@ -23,6 +25,7 @@ import permissionsRouter from './routes/permissions';
 import profilesRouter from './routes/profiles';
 import queuesRouter from './routes/queues';
 import serviceHoursRouter from './routes/serviceHours';
+import serverInfoRouter from './routes/serverInfo';
 import trunksRouter from './routes/trunks';
 import uploadsRouter from './routes/uploads';
 import usersRouter from './routes/users';
@@ -55,6 +58,8 @@ const auth = authorization(app);
 app.use(auth.initialize());
 app.auth = auth;
 
+apisRouter(app);
+apisCallsRouter(app);
 authRouter(app);
 callbacksRouter(app);
 categoriesRouter(app);
@@ -74,6 +79,7 @@ permissionsRouter(app);
 profilesRouter(app);
 queuesRouter(app);
 serviceHoursRouter(app);
+serverInfoRouter(app);
 trunksRouter(app);
 uploadsRouter(app);
 usersRouter(app);
