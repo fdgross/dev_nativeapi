@@ -11,6 +11,7 @@ export default (sequelize, DataType) => {
       name: {
         type: DataType.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           notEmpty: true,
         },
@@ -43,6 +44,7 @@ export default (sequelize, DataType) => {
       },
     },
     {
+      paranoid: true,
       classMethods: {
         associate: (models) => {
           Users.belongsToMany(models.Permissions, {
@@ -62,7 +64,11 @@ export default (sequelize, DataType) => {
           user.set('password', bcrypt.hashSync(user.password, bcrypt.genSaltSync()));
         },
         beforeUpdate: (user) => {
-          user.set('password', bcrypt.hashSync(user.password, bcrypt.genSaltSync()));
+          if (user.password.length === 60) {
+            delete user.password;
+          } else {
+            user.set('password', bcrypt.hashSync(user.password, bcrypt.genSaltSync()));
+          }
         },
       },
     },

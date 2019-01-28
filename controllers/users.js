@@ -36,6 +36,7 @@ class UsersController {
           },
         },
       ],
+      paranoid: true,
     })
       .then(result => defaultResponse(result))
       .catch(error => errorResponse(error.message));
@@ -62,6 +63,7 @@ class UsersController {
         },
       ],
       where: params,
+      paranoid: true,
     })
       .then(result => defaultResponse(result))
       .catch(error => errorResponse(error.message));
@@ -90,6 +92,7 @@ class UsersController {
     return this.Users.update(data, {
       where: params,
       individualHooks: true,
+      paranoid: true,
     })
       .then((result) => {
         if (result[0] === 0) {
@@ -110,6 +113,7 @@ class UsersController {
   delete(params) {
     return this.Users.destroy({
       where: params,
+      paranoid: true,
     })
       .then(result => defaultResponse(result, HttpStatus.NO_CONTENT))
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));

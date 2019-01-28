@@ -8,9 +8,9 @@ export default(app) => {
     app.datasource.models.Groups,
   );
   app.route('/peers')
-    .all(app.auth.authenticate())
+    // .all(app.auth.authenticate())
     .get((req, res) => {
-      peersController.getAll()
+      peersController.getAll(req.query)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);
@@ -26,9 +26,9 @@ export default(app) => {
     });
 
   app.route('/peers/:id')
-    .all(app.auth.authenticate())
+    // .all(app.auth.authenticate())
     .get((req, res) => {
-      peersController.getById(req.params.id)
+      peersController.getById(req.params.id, req.query)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

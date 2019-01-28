@@ -8,6 +8,7 @@ export default (sequelize, DataType) => {
     name: {
       type: DataType.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notEmpty: true,
       },
@@ -16,8 +17,21 @@ export default (sequelize, DataType) => {
       type: DataType.TEXT,
       allowNull: true,
     },
+    extension: {
+      type: DataType.INTEGER,
+      unique: true,
+      allowNull: true,
+    },
     type: {
       type: DataType.STRING,
+      allowNull: true,
+    },
+    mode: {
+      type: DataType.STRING,
+      allowNull: true,
+    },
+    basicDefinition: {
+      type: DataType.TEXT,
       allowNull: true,
     },
   }, {

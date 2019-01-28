@@ -68,14 +68,25 @@ class IvrsController {
       .then((newIvr) => {
         const newFolder = `${app.config.defaultIvrUploadDir}/${newIvr.id}`;
         fs.mkdirSync(newFolder);
-        ivrDetails.forEach((detail) => {
-          if ((detail.command === 'playback') || (detail.command === 'read')) {
-            const objParameters = JSON.parse(detail.parameters);
-            syncFiles(newIvr.id, objParameters.file);
+        if (data.mode === 'advanced') {
+          ivrDetails.forEach((detail) => {
+            if ((detail.command === 'playback') || (detail.command === 'read')) {
+              const objParameters = JSON.parse(detail.parameters);
+              syncFiles(newIvr.id, objParameters.file);
+            }
+            this.IvrsDetails.create(detail)
+              .then(newDetail => newIvr.addIvrDetails(newDetail.id));
+          });
+        } else {
+          const basicDefinition = JSON.parse(data.basicDefinition);
+          if (basicDefinition.fileMain.file.name) {
+            syncFiles(newIvr.id, basicDefinition.fileMain.file.name);
           }
-          this.IvrsDetails.create(detail)
-            .then(newDetail => newIvr.addIvrDetails(newDetail.id));
-        });
+          if (basicDefinition.fileError.file.name) {
+            syncFiles(newIvr.id, basicDefinition.fileError.file.name);
+          }
+        }
+
         return newIvr;
       })
       .then(result => defaultResponse(result, HttpStatus.CREATED))
@@ -96,14 +107,24 @@ class IvrsController {
           where: params,
         })
           .then((updatedIvr) => {
-            ivrDetails.forEach((detail) => {
-              if ((detail.command === 'playback') || (detail.command === 'read')) {
-                const objParameters = JSON.parse(detail.parameters);
-                syncFiles(updatedIvr.id, objParameters.file);
+            if (data.mode === 'advanced') {
+              ivrDetails.forEach((detail) => {
+                if ((detail.command === 'playback') || (detail.command === 'read')) {
+                  const objParameters = JSON.parse(detail.parameters);
+                  syncFiles(updatedIvr.id, objParameters.file);
+                }
+                this.IvrsDetails.create(detail)
+                  .then(newDetail => updatedIvr.addIvrDetails(newDetail.id));
+              });
+            } else {
+              const basicDefinition = JSON.parse(data.basicDefinition);
+              if (basicDefinition.fileMain.file.name) {
+                syncFiles(updatedIvr.id, basicDefinition.fileMain.file.name);
               }
-              this.IvrsDetails.create(detail)
-                .then(newDetail => updatedIvr.addIvrDetails(newDetail.id));
-            });
+              if (basicDefinition.fileError.file.name) {
+                syncFiles(updatedIvr.id, basicDefinition.fileError.file.name);
+              }
+            }
           });
         return updatedIvrCount;
       })
