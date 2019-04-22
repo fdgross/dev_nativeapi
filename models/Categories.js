@@ -84,6 +84,14 @@ export default (sequelize, DataType) => {
       type: DataType.INTEGER,
       allowNull: true,
     },
+    createdBy: {
+      type: DataType.STRING,
+      allowNull: true,
+    },
+    updatedBy: {
+      type: DataType.STRING,
+      allowNull: true,
+    },
   });
 
   return Categories;

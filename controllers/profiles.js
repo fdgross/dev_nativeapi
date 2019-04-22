@@ -52,7 +52,8 @@ class ProfilesController {
       .catch(error => errorResponse(error.message));
   }
 
-  create(data) {
+  create(data, createdBy) {
+    data.createdBy = createdBy.username;
     const outRoutes = data.outRoutes;
     delete data.outRoutes;
     return this.Profiles.create(data)
@@ -64,7 +65,8 @@ class ProfilesController {
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
-  update(data, params) {
+  update(data, params, updatedBy) {
+    data.updatedBy = updatedBy.username;
     const outRoutes = data.outRoutes;
     delete data.outRoutes;
     return this.Profiles.update(data, {

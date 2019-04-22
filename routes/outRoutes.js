@@ -17,7 +17,7 @@ export default(app) => {
         });
     })
     .post((req, res) => {
-      outRoutesController.create(req.body)
+      outRoutesController.create(req.body, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);
@@ -34,7 +34,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      outRoutesController.update(req.body, req.params)
+      outRoutesController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

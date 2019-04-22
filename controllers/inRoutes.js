@@ -51,7 +51,8 @@ class InRoutesController {
       .catch(error => errorResponse(error.message));
   }
 
-  create(data) {
+  create(data, createdBy) {
+    data.createdBy = createdBy.username;
     const inRoutesDetails = data.inRoutesDetails;
     delete data.inRoutesDetails;
 
@@ -75,7 +76,8 @@ class InRoutesController {
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
-  update(data, params) {
+  update(data, params, updatedBy) {
+    data.updatedBy = updatedBy.username;
     const inRoutesDetails = data.inRoutesDetails;
     delete data.inRoutesDetails;
     this.InRoutesDetails.destroy({

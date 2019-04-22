@@ -28,13 +28,15 @@ class ApisCallsController {
       .catch(error => errorResponse(error.message));
   }
 
-  create(data) {
+  create(data, createdBy) {
+    data.createdBy = createdBy.username;
     return this.ApisCalls.create(data)
       .then(result => defaultResponse(result, HttpStatus.CREATED))
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
-  update(data, params) {
+  update(data, params, updatedBy) {
+    data.updatedBy = updatedBy.username;
     return this.ApisCalls.update(data, {
       where: params,
     })

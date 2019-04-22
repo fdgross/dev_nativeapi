@@ -1,3 +1,4 @@
+/* eslint-disable no-array-constructor */
 import HttpStatus from 'http-status';
 
 const defaultResponse = (data, statusCode = HttpStatus.OK) => ({
@@ -74,7 +75,8 @@ class ServiceHoursController {
       .catch(error => errorResponse(error.message));
   }
 
-  create(data) {
+  create(data, createdBy) {
+    data.createdBy = createdBy.username;
     const ivrs = data.ivrs;
     delete data.ivrs;
     const queues = data.queues;
@@ -82,7 +84,7 @@ class ServiceHoursController {
     const serviceHoursDetails = data.serviceHoursDetails;
     delete data.serviceHoursDetails;
 
-    const arrDetails = new Array;
+    const arrDetails = new Array();
     serviceHoursDetails.forEach((detail) => {
       this.ServiceHoursDetails.create(detail).then(newDetail => arrDetails.push(newDetail.id));
     });
@@ -92,21 +94,22 @@ class ServiceHoursController {
         newServiceHour.setIvrs(ivrs);
         newServiceHour.setQueues(queues);
         arrDetails.forEach((detail) => {
-            newServiceHour.addServiceHoursDetails(detail);
+          newServiceHour.addServiceHoursDetails(detail);
         });
       })
       .then(result => defaultResponse(result, HttpStatus.CREATED))
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
-  update(data, params) {
+  update(data, params, updatedBy) {
+    data.updatedBy = updatedBy.username;
     const ivrs = data.ivrs;
     delete data.ivrs;
     const queues = data.queues;
     delete data.queues;
     const serviceHoursDetails = data.serviceHoursDetails;
     delete data.serviceHoursDetails;
-    
+
     this.ServiceHoursDetails.destroy({
       where: { serviceHourId: params.id },
     });

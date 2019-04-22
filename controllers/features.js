@@ -28,13 +28,15 @@ class FeaturesController {
       .catch(error => errorResponse(error.message));
   }
 
-  create(data) {
+  create(data, createdBy) {
+    data.createdBy = createdBy.username;
     return this.Features.create(data)
       .then(result => defaultResponse(result, HttpStatus.CREATED))
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
-  update(data, params) {
+  update(data, params, updatedBy) {
+    data.updatedBy = updatedBy.username;
     return this.Features.update(data, {
       where: params,
     })

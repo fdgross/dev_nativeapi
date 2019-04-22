@@ -47,7 +47,8 @@ class MohsController {
       .catch(error => errorResponse(error.message));
   }
 
-  create(data) {
+  create(data, createdBy) {
+    data.createdBy = createdBy.username;
     return this.Mohs.create(data)
       .then((newMoh) => {
         const newFolder = `${app.config.defaultMohUploadDir}/${newMoh.id}`;
@@ -58,7 +59,8 @@ class MohsController {
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
-  update(data, params) {
+  update(data, params, updatedBy) {
+    data.updatedBy = updatedBy.username;
     return this.Mohs.update(data, {
       where: params,
     })

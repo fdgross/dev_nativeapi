@@ -14,7 +14,7 @@ export default(app) => {
     .post((req, res) => {
       mohsController.create(req.body)
         .then((response) => {
-          res.status(response.statusCode);
+          res.status(response.statusCode, req.user);
           res.json(response.data);
         });
     });
@@ -29,7 +29,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      mohsController.update(req.body, req.params)
+      mohsController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

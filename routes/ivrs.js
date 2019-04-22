@@ -17,7 +17,7 @@ export default(app) => {
     .post((req, res) => {
       ivrsController.create(req.body)
         .then((response) => {
-          res.status(response.statusCode);
+          res.status(response.statusCode, req.user);
           res.json(response.data);
         });
     });
@@ -32,7 +32,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      ivrsController.update(req.body, req.params)
+      ivrsController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

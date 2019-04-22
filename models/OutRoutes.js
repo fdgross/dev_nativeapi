@@ -16,6 +16,14 @@ export default (sequelize, DataType) => {
       type: DataType.TEXT,
       allowNull: true,
     },
+    createdBy: {
+      type: DataType.STRING,
+      allowNull: true,
+    },
+    updatedBy: {
+      type: DataType.STRING,
+      allowNull: true,
+    },
   }, {
     classMethods: {
       associate: (models) => {

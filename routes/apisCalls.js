@@ -12,7 +12,7 @@ export default(app) => {
         });
     })
     .post((req, res) => {
-      apisCallsController.create(req.body)
+      apisCallsController.create(req.body, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);
@@ -29,7 +29,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      apisCallsController.update(req.body, req.params)
+      apisCallsController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

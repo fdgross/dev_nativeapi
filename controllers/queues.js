@@ -81,7 +81,8 @@ class QueuesController {
       .catch(error => errorResponse(error.message));
   }
 
-  create(data) {
+  create(data, createdBy) {
+    data.createdBy = createdBy.username;
     const peers = data.peers;
     delete data.peers;
     const users = data.users;
@@ -102,7 +103,8 @@ class QueuesController {
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
-  update(data, params) {
+  update(data, params, updatedBy) {
+    data.updatedBy = updatedBy.username;
     const peers = data.peers;
     delete data.peers;
     const users = data.users;

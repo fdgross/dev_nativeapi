@@ -16,7 +16,7 @@ export default(app) => {
         });
     })
     .post((req, res) => {
-      usersController.create(req.body)
+      usersController.create(req.body, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);
@@ -33,7 +33,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      usersController.update(req.body, req.params)
+      usersController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

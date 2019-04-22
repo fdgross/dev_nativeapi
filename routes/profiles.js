@@ -15,7 +15,7 @@ export default(app) => {
         });
     })
     .post((req, res) => {
-      profilesController.create(req.body)
+      profilesController.create(req.body, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);
@@ -32,7 +32,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      profilesController.update(req.body, req.params)
+      profilesController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

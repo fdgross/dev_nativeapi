@@ -12,7 +12,7 @@ export default(app) => {
         });
     })
     .post((req, res) => {
-      featuresController.create(req.body)
+      featuresController.create(req.body, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);
@@ -29,7 +29,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      featuresController.update(req.body, req.params)
+      featuresController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

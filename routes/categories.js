@@ -12,7 +12,7 @@ export default(app) => {
         });
     })
     .post((req, res) => {
-      categoriesController.create(req.body)
+      categoriesController.create(req.body, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);
@@ -29,7 +29,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      categoriesController.update(req.body, req.params)
+      categoriesController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

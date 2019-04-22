@@ -12,7 +12,7 @@ export default(app) => {
         });
     })
     .post((req, res) => {
-      meetmesController.create(req.body)
+      meetmesController.create(req.body, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);
@@ -29,7 +29,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      meetmesController.update(req.body, req.params)
+      meetmesController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

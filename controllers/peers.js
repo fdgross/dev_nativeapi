@@ -54,7 +54,11 @@ class PeersController {
 
   setDefaultQuery() {
     this.attributes = { exclude: [] };
-    this.include = [this.includeCategory, this.includeProfile, this.includeGroups];
+    this.include = [
+      this.includeCategory,
+      this.includeProfile,
+      this.includeGroups,
+    ];
     this.limit = 50;
     this.offset = 0;
     this.sort = [];
@@ -166,7 +170,8 @@ class PeersController {
       .catch(error => errorResponse(error.message));
   }
 
-  create(data) {
+  create(data, createdBy) {
+    data.createdBy = createdBy.username;
     const groups = data.groups;
     delete data.groups;
     return this.Peers.create(data)
@@ -178,7 +183,8 @@ class PeersController {
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
-  update(data, params) {
+  update(data, params, updatedBy) {
+    data.updatedBy = updatedBy.username;
     const groups = data.groups;
     delete data.groups;
     return this.Peers.update(data, {
@@ -204,7 +210,7 @@ class PeersController {
       where: params,
     })
       .then((result) => {
-        filePersist.writePeersToFile();
+        // filePersist.writePeersToFile();
         return result;
       })
       .then(result => defaultResponse(result, HttpStatus.NO_CONTENT))

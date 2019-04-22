@@ -8,7 +8,7 @@ export default(app) => {
     app.datasource.models.Groups,
   );
   app.route('/peers')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       peersController.getAll(req.query)
         .then((response) => {
@@ -17,7 +17,7 @@ export default(app) => {
         });
     })
     .post((req, res) => {
-      peersController.create(req.body)
+      peersController.create(req.body, req.user)
         .then((response) => {
           res.setHeader('Location', `http://localhost:7000/peers/${response.data.id}`);
           res.status(response.statusCode);
@@ -26,7 +26,7 @@ export default(app) => {
     });
 
   app.route('/peers/:id')
-    // .all(app.auth.authenticate())
+    .all(app.auth.authenticate())
     .get((req, res) => {
       peersController.getById(req.params.id, req.query)
         .then((response) => {
@@ -35,7 +35,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      peersController.update(req.body, req.params)
+      peersController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

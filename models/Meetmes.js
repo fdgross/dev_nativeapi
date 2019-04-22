@@ -45,6 +45,14 @@ export default (sequelize, DataType) => {
       allowNull: false,
       defaultValue: false,
     },
+    createdBy: {
+      type: DataType.STRING,
+      allowNull: true,
+    },
+    updatedBy: {
+      type: DataType.STRING,
+      allowNull: true,
+    },
   });
 
   return Meetmes;

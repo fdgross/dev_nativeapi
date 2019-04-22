@@ -17,7 +17,7 @@ export default(app) => {
         });
     })
     .post((req, res) => {
-      serviceHoursController.create(req.body)
+      serviceHoursController.create(req.body, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);
@@ -34,7 +34,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      serviceHoursController.update(req.body, req.params)
+      serviceHoursController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

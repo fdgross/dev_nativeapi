@@ -80,6 +80,26 @@ export default (sequelize, DataType) => {
       type: DataType.STRING,
       allowNull: true,
     },
+    callLimit: {
+      type: DataType.INTEGER,
+      allowNull: true,
+    },
+    minutesLimit: {
+      type: DataType.INTEGER,
+      allowNull: true,
+    },
+    minutesLimitDay: {
+      type: DataType.INTEGER,
+      allowNull: true,
+    },
+    createdBy: {
+      type: DataType.STRING,
+      allowNull: true,
+    },
+    updatedBy: {
+      type: DataType.STRING,
+      allowNull: true,
+    },
   }, {
     scopes: {
       defaultTrunk: {
@@ -89,6 +109,9 @@ export default (sequelize, DataType) => {
           'type',
           'createdAt',
           'updatedAt',
+          'callLimit',
+          'minutesLimit',
+          'minutesLimitDay',
         ],
       },
       trunkKhomp: {

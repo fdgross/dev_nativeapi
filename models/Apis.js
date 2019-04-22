@@ -36,6 +36,14 @@ export default (sequelize, DataType) => {
       type: DataType.STRING,
       allowNull: true,
     },
+    createdBy: {
+      type: DataType.STRING,
+      allowNull: true,
+    },
+    updatedBy: {
+      type: DataType.STRING,
+      allowNull: true,
+    },
   });
 
   return Apis;

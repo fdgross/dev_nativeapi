@@ -59,7 +59,8 @@ class EventsController {
       .catch(error => errorResponse(error.message));
   }
 
-  create(data) {
+  create(data, createdBy) {
+    data.createdBy = createdBy.username;
     const queues = data.queues;
     delete data.queues;
     const ivrs = data.ivrs;
@@ -74,7 +75,8 @@ class EventsController {
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
-  update(data, params) {
+  update(data, params, updatedBy) {
+    data.updatedBy = updatedBy.username;
     const queues = data.queues;
     delete data.queues;
     const ivrs = data.ivrs;

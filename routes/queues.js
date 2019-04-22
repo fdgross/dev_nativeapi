@@ -17,7 +17,7 @@ export default(app) => {
         });
     })
     .post((req, res) => {
-      queuesController.create(req.body)
+      queuesController.create(req.body, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);
@@ -34,7 +34,7 @@ export default(app) => {
         });
     })
     .put((req, res) => {
-      queuesController.update(req.body, req.params)
+      queuesController.update(req.body, req.params, req.user)
         .then((response) => {
           res.status(response.statusCode);
           res.json(response.data);

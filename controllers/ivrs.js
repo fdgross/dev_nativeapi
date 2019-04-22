@@ -60,7 +60,8 @@ class IvrsController {
       .catch(error => errorResponse(error.message));
   }
 
-  create(data) {
+  create(data, createdBy) {
+    data.createdBy = createdBy.username;
     const ivrDetails = data.ivrDetails;
     delete data.ivrDetails;
 
@@ -85,6 +86,9 @@ class IvrsController {
           if (basicDefinition.fileError.file.name) {
             syncFiles(newIvr.id, basicDefinition.fileError.file.name);
           }
+          if (basicDefinition.fileSuccess.file.name) {
+            syncFiles(newIvr.id, basicDefinition.fileSuccess.file.name);
+          }
         }
 
         return newIvr;
@@ -93,7 +97,8 @@ class IvrsController {
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
-  update(data, params) {
+  update(data, params, updatedBy) {
+    data.updatedBy = updatedBy.username;
     const ivrDetails = data.ivrDetails;
     delete data.ivrDetails;
     this.IvrsDetails.destroy({
@@ -123,6 +128,9 @@ class IvrsController {
               }
               if (basicDefinition.fileError.file.name) {
                 syncFiles(updatedIvr.id, basicDefinition.fileError.file.name);
+              }
+              if (basicDefinition.fileSuccess.file.name) {
+                syncFiles(updatedIvr.id, basicDefinition.fileSuccess.file.name);
               }
             }
           });

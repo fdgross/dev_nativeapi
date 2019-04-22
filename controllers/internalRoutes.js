@@ -50,7 +50,8 @@ class InternalRoutesController {
       .catch(error => errorResponse(error.message));
   }
 
-  create(data) {
+  create(data, createdBy) {
+    data.createdBy = createdBy.username;
     const internalRoutesDetails = data.internalRoutesDetails;
     delete data.internalRoutesDetails;
 
@@ -74,7 +75,8 @@ class InternalRoutesController {
       .catch(error => errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY));
   }
 
-  update(data, params) {
+  update(data, params, updatedBy) {
+    data.updatedBy = updatedBy.username;
     const internalRoutesDetails = data.internalRoutesDetails;
     delete data.internalRoutesDetails;
 

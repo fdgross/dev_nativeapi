@@ -39,6 +39,7 @@ export default (app) => {
                 username: user.username,
                 name: user.name,
                 avatar: user.avatar,
+                administrator: user.administrator,
                 permissions,
               },
               token: jwt.encode(payload, config.jwtSecret),
