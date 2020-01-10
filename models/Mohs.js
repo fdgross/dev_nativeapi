@@ -1,5 +1,5 @@
 export default (sequelize, DataType) => {
-  const Mohs = sequelize.define('Mohs', {
+  const Mohs = sequelize.define("Mohs", {
     id: {
       type: DataType.INTEGER,
       primaryKey: true,
@@ -32,4 +32,3 @@ export default (sequelize, DataType) => {
 
   return Mohs;
 };
-

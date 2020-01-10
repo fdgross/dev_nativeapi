@@ -1,4 +1,4 @@
-import si from 'systeminformation';
+import si from "systeminformation";
 
 async function sysinfo(res) {
   try {
@@ -6,8 +6,11 @@ async function sysinfo(res) {
     const memdata = await si.mem();
     const fsdata = await si.fsSize();
     const networkifsdata = await si.networkInterfaces();
-    const servicesdata = await si.services('adobearmservice, adobearmservice, appinfo, appinfo');
+    const servicesdata = await si.services(
+      "adobearmservice, cron, adobearmservice, docker",
+    );
     const timedata = await si.time();
+    const hardDiskData = await si.diskLayout();
 
     const data = {
       currentLoad: currentloaddata,
@@ -16,6 +19,7 @@ async function sysinfo(res) {
       networkInterfaces: networkifsdata,
       services: servicesdata,
       time: timedata,
+      hardDiskSerialNumber: hardDiskData[0].serialNum,
     };
 
     res.status(200);
@@ -25,9 +29,8 @@ async function sysinfo(res) {
   }
 }
 
-export default(app) => {
-  app.route('/serverInfo')
-    .get((req, res) => {
-      sysinfo(res);
-    });
+export default app => {
+  app.route("/serverInfo").get((req, res) => {
+    sysinfo(res);
+  });
 };
