@@ -29,7 +29,7 @@ import serverInfoRouter from "./routes/serverInfo";
 import trunksRouter from "./routes/trunks";
 import uploadsRouter from "./routes/uploads";
 import usersRouter from "./routes/users";
-import useLicensesRouter from "./routes/useLicenses";
+import configurationsRouter from "./routes/configurations";
 // END ROUTERS
 import authRouter from "./routes/auth";
 import authorization from "./auth";
@@ -84,6 +84,6 @@ serverInfoRouter(app);
 trunksRouter(app);
 uploadsRouter(app);
 usersRouter(app);
-useLicensesRouter(app);
+configurationsRouter(app);
 
 export default app;

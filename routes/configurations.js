@@ -1,43 +1,43 @@
-import UseLicensesController from "../controllers/useLicenses";
+import Configurations from "../controllers/configurations";
 
 export default app => {
-  const useLicensesController = new UseLicensesController(
-    app.datasource.models.UseLicenses,
+  const configurations = new Configurations(
+    app.datasource.models.Configurations,
   );
 
   app
-    .route("/useLicenses")
+    .route("/configurations")
     .all(app.auth.authenticate())
     .get((req, res) => {
-      useLicensesController.getLast().then(response => {
+      configurations.getLast().then(response => {
         res.status(response.statusCode);
         res.json(response.data);
       });
     })
     .post((req, res) => {
-      useLicensesController.create(req.body).then(response => {
+      configurations.create(req.body).then(response => {
         res.status(response.statusCode);
         res.json(response.data);
       });
     });
 
   app
-    .route("/useLicenses/:id")
+    .route("/configurations/:id")
     .all(app.auth.authenticate())
     .get((req, res) => {
-      useLicensesController.getById(req.params).then(response => {
+      configurations.getById(req.params).then(response => {
         res.status(response.statusCode);
         res.json(response.data);
       });
     })
     .put((req, res) => {
-      useLicensesController.update(req.body, req.params).then(response => {
+      configurations.update(req.body, req.params).then(response => {
         res.status(response.statusCode);
         res.json(response.data);
       });
     })
     .delete((req, res) => {
-      useLicensesController.delete(req.params).then(response => {
+      configurations.delete(req.params).then(response => {
         res.sendStatus(response.statusCode);
       });
     });

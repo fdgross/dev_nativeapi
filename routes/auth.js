@@ -40,6 +40,7 @@ export default app => {
                 name: user.name,
                 avatar: user.avatar,
                 administrator: user.administrator,
+                superAdministrator: user.superAdministrator,
                 permissions,
               },
               token: jwt.encode(payload, config.jwtSecret),

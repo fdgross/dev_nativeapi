@@ -13,13 +13,13 @@ const errorResponse = (message, statusCode = HttpStatus.BAD_REQUEST) =>
     statusCode,
   );
 
-class UseLicensesController {
-  constructor(UseLicenses) {
-    this.UseLicenses = UseLicenses;
+class ConfigurationsController {
+  constructor(Configurations) {
+    this.Configurations = Configurations;
   }
 
   getLast() {
-    return this.UseLicenses.findOne({
+    return this.Configurations.findOne({
       limit: 1,
       order: [["createdAt", "DESC"]],
     })
@@ -28,7 +28,7 @@ class UseLicensesController {
   }
 
   getById(params) {
-    return this.UseLicenses.findOne({
+    return this.Configurations.findOne({
       where: params,
     })
       .then(result => defaultResponse(result))
@@ -36,7 +36,7 @@ class UseLicensesController {
   }
 
   create(data) {
-    return this.UseLicenses.create(data)
+    return this.Configurations.create(data)
       .then(result => defaultResponse(result, HttpStatus.CREATED))
       .catch(error =>
         errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY),
@@ -44,7 +44,7 @@ class UseLicensesController {
   }
 
   update(data, params) {
-    return this.UseLicenses.update(data, {
+    return this.Configurations.update(data, {
       where: params,
     })
       .then(result => defaultResponse(result))
@@ -54,7 +54,7 @@ class UseLicensesController {
   }
 
   delete(params) {
-    return this.UseLicenses.destroy({
+    return this.Configurations.destroy({
       where: params,
     })
       .then(result => defaultResponse(result, HttpStatus.NO_CONTENT))
@@ -64,4 +64,4 @@ class UseLicensesController {
   }
 }
 
-export default UseLicensesController;
+export default ConfigurationsController;

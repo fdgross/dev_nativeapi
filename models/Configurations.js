@@ -1,7 +1,7 @@
 import differenceInDays from "date-fns/differenceInDays";
 
 export default (sequelize, DataType) => {
-  const UseLicenses = sequelize.define("UseLicenses", {
+  const Configurations = sequelize.define("Configurations", {
     id: {
       type: DataType.INTEGER,
       primaryKey: true,
@@ -21,10 +21,17 @@ export default (sequelize, DataType) => {
     },
     hardDiskSerial: {
       type: DataType.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
+      allowNull: true,
+    },
+    usersLimit: {
+      type: DataType.INTEGER,
+      allowNull: true,
+      default: 0,
+    },
+    peersLimit: {
+      type: DataType.INTEGER,
+      allowNull: true,
+      default: 0,
     },
     createdAt: {
       type: DataType.DATE,
@@ -45,5 +52,5 @@ export default (sequelize, DataType) => {
     },
   });
 
-  return UseLicenses;
+  return Configurations;
 };

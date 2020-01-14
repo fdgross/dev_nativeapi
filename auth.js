@@ -1,15 +1,15 @@
-import passport from 'passport';
-import { Strategy, ExtractJwt } from 'passport-jwt';
+import passport from "passport";
+import { Strategy, ExtractJwt } from "passport-jwt";
 
-export default (app) => {
+export default app => {
   const Users = app.datasource.models.Users;
   const opts = {};
   opts.secretOrKey = app.config.jwtSecret;
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 
   const strategy = new Strategy(opts, (payload, done) => {
-    Users.findById(payload.id)
-      .then((user) => {
+    Users.findByPk(payload.id)
+      .then(user => {
         if (user) {
           return done(null, {
             id: user.id,
@@ -25,6 +25,6 @@ export default (app) => {
 
   return {
     initialize: () => passport.initialize(),
-    authenticate: () => passport.authenticate('jwt', app.config.jwtSession),
+    authenticate: () => passport.authenticate("jwt", app.config.jwtSession),
   };
 };
