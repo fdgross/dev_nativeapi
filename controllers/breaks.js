@@ -13,41 +13,19 @@ const errorResponse = (message, statusCode = HttpStatus.BAD_REQUEST) =>
     statusCode,
   );
 
-const filePersist = require("./filePersist");
-
-class CallbacksController {
-  constructor(Callbacks, Profiles) {
-    this.Callbacks = Callbacks;
-    this.Profiles = Profiles;
+class BreaksController {
+  constructor(Breaks) {
+    this.Breaks = Breaks;
   }
 
   getAll() {
-    return this.Callbacks.findAll({
-      include: [
-        {
-          model: this.Profiles,
-          as: "Profile",
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-      ],
-    })
+    return this.Breaks.findAll({})
       .then(result => defaultResponse(result))
       .catch(error => errorResponse(error.message));
   }
 
   getById(params) {
-    return this.Callbacks.findOne({
-      include: [
-        {
-          model: this.Profiles,
-          as: "Profile",
-          attributes: {
-            exclude: ["createdAt", "updatedAt"],
-          },
-        },
-      ],
+    return this.Breaks.findOne({
       where: params,
     })
       .then(result => defaultResponse(result))
@@ -56,7 +34,7 @@ class CallbacksController {
 
   create(data, createdBy) {
     data.createdBy = createdBy.username;
-    return this.Callbacks.create(data)
+    return this.Breaks.create(data)
       .then(result => defaultResponse(result, HttpStatus.CREATED))
       .catch(error =>
         errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY),
@@ -65,13 +43,9 @@ class CallbacksController {
 
   update(data, params, updatedBy) {
     data.updatedBy = updatedBy.username;
-    return this.Callbacks.update(data, {
+    return this.Breaks.update(data, {
       where: params,
     })
-      .then(updatedCallback => {
-        filePersist.writePeersToFile();
-        return updatedCallback;
-      })
       .then(result => defaultResponse(result))
       .catch(error =>
         errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY),
@@ -79,7 +53,7 @@ class CallbacksController {
   }
 
   delete(params) {
-    return this.Callbacks.destroy({
+    return this.Breaks.destroy({
       where: params,
     })
       .then(result => defaultResponse(result, HttpStatus.NO_CONTENT))
@@ -89,4 +63,4 @@ class CallbacksController {
   }
 }
 
-export default CallbacksController;
+export default BreaksController;

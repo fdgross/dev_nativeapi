@@ -41,6 +41,7 @@ export default app => {
                 avatar: user.avatar,
                 administrator: user.administrator,
                 superAdministrator: user.superAdministrator,
+                callcenter: user.callcenter,
                 permissions,
               },
               token: jwt.encode(payload, config.jwtSecret),

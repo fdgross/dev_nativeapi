@@ -30,6 +30,9 @@ import trunksRouter from "./routes/trunks";
 import uploadsRouter from "./routes/uploads";
 import usersRouter from "./routes/users";
 import configurationsRouter from "./routes/configurations";
+import breaksRouter from "./routes/breaks";
+import breaksRequestsRouter from "./routes/breaksRequests";
+import userBreaksRequestes from "./routes/usersBreaksRequests";
 // END ROUTERS
 import authRouter from "./routes/auth";
 import authorization from "./auth";
@@ -85,5 +88,8 @@ trunksRouter(app);
 uploadsRouter(app);
 usersRouter(app);
 configurationsRouter(app);
+breaksRouter(app);
+breaksRequestsRouter(app);
+userBreaksRequestes(app);
 
 export default app;

@@ -132,17 +132,6 @@ class UsersController {
         errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY),
       );
   }
-
-  // count(params) {
-  //   return this.Users.count({
-  //     where: params,
-  //     paranoid: true,
-  //   })
-  //     .then(result => defaultResponse(result, HttpStatus.NO_CONTENT))
-  //     .catch(error =>
-  //       errorResponse(error.message, HttpStatus.UNPROCESSABLE_ENTITY),
-  //     );
-  // }
 }
 
 export default UsersController;
